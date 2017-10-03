@@ -1,0 +1,25 @@
+{
+  "name": "az_test_front",
+  "version": "0.1.0",
+  "private": true,
+  "dependencies": {
+    "immutable": "^4.0.0-rc.4",
+    "prop-types": "^15.6.0",
+    "react": "^16.0.0",
+    "react-dom": "^16.0.0",
+    "react-redux": "^5.0.6",
+    "react-scripts": "1.0.14",
+    "redux": "^3.7.2"
+  },
+  "scripts": {
+    "start": "NODE_PATH=src react-scripts start",
+    "build": "NODE_PATH=src react-scripts build",
+    "test": "react-scripts test --env=jsdom",
+    "format": "eslint \"src/**/*.js\" --fix",
+    "lint": "eslint \"src/**/*.js\""
+  },
+  "devDependencies": {
+    "eslint-plugin-prettier": "^2.3.1",
+    "prettier": "^1.7.4"
+  }
+}
