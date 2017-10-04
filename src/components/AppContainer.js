@@ -4,7 +4,7 @@ import {
   addGroceryItem,
   editGroceryItem,
   removeGroceryItem,
-  saveEditItem,
+  saveEditGroceryItem,
   toggleCheckedGroceryItem,
 } from 'actions';
 import App from 'components/App';
@@ -18,7 +18,7 @@ function mapDispatchToProps(dispatch) {
     addGroceryItem: item => dispatch(addGroceryItem(item)),
     editGroceryItem: (item, index) => dispatch(editGroceryItem(item, index)),
     removeGroceryItem: index => dispatch(removeGroceryItem(index)),
-    saveEditItem: (item, name) => dispatch(saveEditItem(item, name)),
+    saveEditGroceryItem: (item, name) => dispatch(saveEditGroceryItem(item, name)),
     toggleCheckedGroceryItem: index => dispatch(toggleCheckedGroceryItem(index)),
   };
 }

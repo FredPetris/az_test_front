@@ -25,7 +25,7 @@ class App extends Component {
 
   onSaveEdit = (item, event) => {
     if (event.key === 'Enter') {
-      this.props.saveEditItem(item, event.target.value);
+      this.props.saveEditGroceryItem(item, event.target.value);
       event.target.value = '';
       this.forceUpdate();
     }

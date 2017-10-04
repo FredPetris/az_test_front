@@ -16,7 +16,7 @@ export function removeGroceryItem(index) {
   return { type: REMOVE_GROCERY_ITEM, index };
 }
 
-export function saveEditItem(item, name) {
+export function saveEditGroceryItem(item, name) {
   return { type: SAVE_EDIT_GROCERY_ITEM, item, name };
 }
 
