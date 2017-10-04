@@ -5,6 +5,7 @@ import {
   EDIT_GROCERY_ITEM,
   REMOVE_GROCERY_ITEM,
   SAVE_EDIT_GROCERY_ITEM,
+  TOGGLE_CHECKED_GROCERY_ITEM,
 } from './actions';
 
 const initialState = new Immutable.List([
@@ -37,6 +38,12 @@ function groceries(state = initialState, action) {
         return item;
       });
       return save;
+
+    case TOGGLE_CHECKED_GROCERY_ITEM:
+      return state.update(action.index, item => {
+        item.checked = !item.checked;
+        return item;
+      });
     default:
       return state;
   }

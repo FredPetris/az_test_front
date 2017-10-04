@@ -31,6 +31,11 @@ class App extends Component {
     }
   };
 
+  onChecked = index => {
+    this.props.toggleCheckedGroceryItem(index);
+    this.forceUpdate();
+  };
+
   render() {
     const { groceries } = this.props;
     let editItem = (item, index) => {
@@ -46,12 +51,14 @@ class App extends Component {
         );
       } else {
         return (
-          <li onDoubleClick={() => this.onEdit(item, index)}>
-            {item.name}
-            &nbsp;
-            <a href="#" onClick={() => this.onRemove(index)}>
-              Remove
-            </a>
+          <li key={index}>
+            <input onClick={() => this.onChecked(index)} type="checkbox" checked={item.checked} />
+            <span className="editAction" onDoubleClick={() => this.onEdit(item, index)}>
+              {item.name}
+            </span>
+            <span className="removeAction" onClick={() => this.onRemove(index)}>
+              X
+            </span>
           </li>
         );
       }

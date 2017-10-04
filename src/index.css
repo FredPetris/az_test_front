@@ -19,3 +19,18 @@ input {
 input[type="text"] {
   width: 100%;
 }
+
+li > * {
+  margin: 0 5px;
+}
+
+.editAction {
+  cursor: pointer;
+}
+
+.removeAction {
+  color: darkred;
+  font-size: 12px;
+  font-weight: bold;
+  cursor: pointer;
+}
