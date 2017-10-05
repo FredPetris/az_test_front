@@ -1,5 +1,6 @@
 import Immutable from 'immutable';
 import { combineReducers } from 'redux';
+
 import {
   ADD_GROCERY_ITEM,
   EDIT_GROCERY_ITEM,
@@ -49,6 +50,4 @@ function groceries(state = initialState, action) {
   }
 }
 
-export default combineReducers({
-  groceries,
-});
+export default combineReducers({ groceries });

@@ -1,12 +1,9 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { createStore } from 'redux';
 import { Provider } from 'react-redux';
-import groceriesApp from './reducers';
 import AppContainer from 'components/AppContainer';
 import './index.css';
-
-const store = createStore(groceriesApp);
+import store from './storage';
 
 ReactDOM.render(
   <Provider store={store}>
