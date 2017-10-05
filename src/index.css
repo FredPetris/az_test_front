@@ -14,23 +14,40 @@ h1, h2, h3 {
 input {
   line-height: inherit;
   font-size: inherit;
+  margin: auto 0;
 }
 
 input[type="text"] {
   width: 100%;
 }
 
-li > * {
+li {
+  display: flex;
+  justify-content: space-between;
+}
+
+.input-item-name {
+  flex: 1;
+  margin: 0 5px;
+  height: 95%;
+  width: 95%;
+}
+.fake-input-item-name {
+  display: flex;
+  flex: 1;
+  justify-content: space-between;
   margin: 0 5px;
 }
 
-.editAction {
+i[class^=icon-] {
   cursor: pointer;
+  margin: auto 1px;
 }
 
-.removeAction {
+.icon-edit {
+  color: lightseagreen;
+}
+
+.icon-remove {
   color: darkred;
-  font-size: 12px;
-  font-weight: bold;
-  cursor: pointer;
 }

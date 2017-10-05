@@ -1,15 +1,16 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import Immutable from 'immutable';
+import { List } from 'immutable';
 
 class App extends Component {
   static propTypes = {
-    groceries: PropTypes.instanceOf(Immutable.List),
+    groceries: PropTypes.instanceOf(List),
   };
 
-  onKeyPress = event => {
+  onAdd = event => {
     if (event.key === 'Enter') {
-      this.props.addGroceryItem({ checked: false, name: event.target.value, isEditing: false });
+      const name = event.target.value;
+      this.props.addGroceryItem({ name });
       event.target.value = '';
     }
   };
@@ -18,61 +19,71 @@ class App extends Component {
     this.props.removeGroceryItem(item);
   };
 
-  onEdit = (item, index) => {
-    this.props.editGroceryItem(item, index);
+  onStartEdit = index => {
+    this.props.saveGroceryItem(index, { isEditing: true });
     this.forceUpdate();
   };
 
-  onSaveEdit = (item, event) => {
+  onSave = (index, event) => {
     if (event.key === 'Enter') {
-      this.props.saveEditGroceryItem(item, event.target.value);
-      event.target.value = '';
+      const name = event.target.value;
+      this.props.saveGroceryItem(index, { name, isEditing: false });
       this.forceUpdate();
     }
   };
 
-  onChecked = index => {
-    this.props.toggleCheckedGroceryItem(index);
+  onChecked = (index, event) => {
+    const checked = event.target.checked;
+    this.props.saveGroceryItem(index, { checked });
     this.forceUpdate();
+  };
+
+  _renderItemName = (item, index) => {
+    if (item.isEditing) {
+      return (
+        <input
+          type="text"
+          className="input-item-name"
+          onKeyPress={this.onSave.bind(this, index)}
+          defaultValue={item.name}
+          placeholder="Edit item..."
+        />
+      );
+    } else {
+      return (
+        <span className="fake-input-item-name">
+          <em>{item.name}</em>
+          <i className="icon-edit" onClick={this.onStartEdit.bind(this, index)}>
+            &#9998;
+          </i>
+        </span>
+      );
+    }
+  };
+
+  _renderItem = (item, index) => {
+    const inputName = this._renderItemName(item, index);
+    return (
+      <li key={index}>
+        <input type="checkbox" checked={item.checked} onChange={this.onChecked.bind(this, index)} />
+
+        {inputName}
+
+        <i className="icon-remove" onClick={this.onRemove.bind(this, index)}>
+          &#10007;
+        </i>
+      </li>
+    );
   };
 
   render() {
     const { groceries } = this.props;
-    let editItem = (item, index) => {
-      if (item.isEditing) {
-        return (
-          <li onDoubleClick={() => this.onEdit(item, index)}>
-            <input
-              type="text"
-              onKeyPress={event => this.onSaveEdit(item, event)}
-              defaultValue={item.name}
-            />
-          </li>
-        );
-      } else {
-        return (
-          <li key={index}>
-            <input onClick={() => this.onChecked(index)} type="checkbox" checked={item.checked} />
-            <span className="editAction" onDoubleClick={() => this.onEdit(item, index)}>
-              {item.name}
-            </span>
-            <span className="removeAction" onClick={() => this.onRemove(index)}>
-              X
-            </span>
-          </li>
-        );
-      }
-    };
 
     return (
       <div className="app">
         <h1>My groceries :</h1>
-        <input
-          type="text"
-          onKeyPress={event => this.onKeyPress(event)}
-          placeholder="Add an item..."
-        />
-        <ul>{groceries.map(editItem)}</ul>
+        <input type="text" onKeyPress={this.onAdd} placeholder="Add an item..." />
+        <ul>{groceries.map(this._renderItem.bind(this))}</ul>
       </div>
     );
   }

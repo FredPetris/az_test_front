@@ -1,12 +1,6 @@
 import { connect } from 'react-redux';
 
-import {
-  addGroceryItem,
-  editGroceryItem,
-  removeGroceryItem,
-  saveEditGroceryItem,
-  toggleCheckedGroceryItem,
-} from 'actions';
+import { addGroceryItem, removeGroceryItem, saveGroceryItem } from 'actions';
 import App from 'components/App';
 
 function mapStateToProps({ groceries }) {
@@ -16,10 +10,8 @@ function mapStateToProps({ groceries }) {
 function mapDispatchToProps(dispatch) {
   return {
     addGroceryItem: item => dispatch(addGroceryItem(item)),
-    editGroceryItem: (item, index) => dispatch(editGroceryItem(item, index)),
     removeGroceryItem: index => dispatch(removeGroceryItem(index)),
-    saveEditGroceryItem: (item, name) => dispatch(saveEditGroceryItem(item, name)),
-    toggleCheckedGroceryItem: index => dispatch(toggleCheckedGroceryItem(index)),
+    saveGroceryItem: (index, item) => dispatch(saveGroceryItem(index, item)),
   };
 }
 

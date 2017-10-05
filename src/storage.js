@@ -4,6 +4,7 @@ import * as storage from 'redux-storage';
 import { createStore, applyMiddleware } from 'redux';
 import reducers from './reducers';
 import createEngine from 'redux-storage-engine-localstorage';
+import immutableList from './decorators/immutable-list';
 
 // We need to wrap the base reducer, as this is the place where the loaded
 // state will be injected.
@@ -17,8 +18,7 @@ const reducer = storage.reducer(reducers);
 //
 // Note: The arguments to `createEngine` are different for every engine!
 
-const engine = createEngine('az_test_front_storage');
-
+const engine = immutableList(createEngine('az_test_front_storage'), ['groceries']);
 // And with the engine we can create our middleware function. The middleware
 // is responsible for calling `engine.save` with the current state afer
 // every dispatched action.

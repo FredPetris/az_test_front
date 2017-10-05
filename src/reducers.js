@@ -1,50 +1,24 @@
-import Immutable from 'immutable';
+import { List } from 'immutable';
 import { combineReducers } from 'redux';
 
-import {
-  ADD_GROCERY_ITEM,
-  EDIT_GROCERY_ITEM,
-  REMOVE_GROCERY_ITEM,
-  SAVE_EDIT_GROCERY_ITEM,
-  TOGGLE_CHECKED_GROCERY_ITEM,
-} from './actions';
+import { ADD_GROCERY_ITEM, REMOVE_GROCERY_ITEM, SAVE_GROCERY_ITEM } from './actions';
 
-const initialState = new Immutable.List([
+const initialState = new List([
   { checked: false, name: 'Apples', isEditing: false },
   { checked: false, name: 'Bananas', isEditing: false },
 ]);
 
 function groceries(state = initialState, action) {
+  const { assign } = Object;
+
   switch (action.type) {
     case ADD_GROCERY_ITEM:
-      return state.push(action.item);
+      const { checked, isEditing } = false;
+      return state.push(assign({ checked, isEditing }, action.item));
     case REMOVE_GROCERY_ITEM:
       return state.delete(action.index);
-    case EDIT_GROCERY_ITEM:
-      return state
-        .update(item => {
-          item.isEditing = false;
-          return item;
-        })
-        .update(action.index, item => {
-          item.isEditing = true;
-          return item;
-        });
-
-    case SAVE_EDIT_GROCERY_ITEM:
-      const index = state.indexOf(action.item);
-      const save = state.update(index, item => {
-        item.name = action.name;
-        item.isEditing = false;
-        return item;
-      });
-      return save;
-
-    case TOGGLE_CHECKED_GROCERY_ITEM:
-      return state.update(action.index, item => {
-        item.checked = !item.checked;
-        return item;
-      });
+    case SAVE_GROCERY_ITEM:
+      return state.update(action.index, item => assign(item, action.item));
     default:
       return state;
   }
