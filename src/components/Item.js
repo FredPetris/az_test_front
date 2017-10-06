@@ -11,26 +11,24 @@ class Item extends Component {
 
   constructor(props) {
     super(props);
-    this.state = { item: props.item };
-    console.log(props);
+    this.state = { isEditing: false };
   }
 
   onRemove = item => {
     this.props.removeGroceryItem(item);
   };
 
-  onStartEdit = index => {
-    this.props.saveGroceryItem(index, { isEditing: true });
-    this.forceUpdate();
-  };
+  onStartEdit() {
+    this.setState({ isEditing: true });
+  }
 
-  onSave = (index, event) => {
+  onSave(index, event) {
     if (event.key === 'Enter') {
       const name = event.target.value;
-      this.props.saveGroceryItem(index, { name, isEditing: false });
-      this.forceUpdate();
+      this.props.saveGroceryItem(index, { name });
+      this.setState({ isEditing: false });
     }
-  };
+  }
 
   onChecked = (index, event) => {
     const checked = event.target.checked;
@@ -39,7 +37,7 @@ class Item extends Component {
   };
 
   _renderItemName(item, index) {
-    if (item.isEditing) {
+    if (this.state.isEditing) {
       return (
         <input
           type="text"
@@ -62,7 +60,7 @@ class Item extends Component {
   }
 
   render() {
-    const item = this.state.item;
+    const item = this.props.item;
     const index = this.props.index;
     const inputName = this._renderItemName(item, index);
     return (
