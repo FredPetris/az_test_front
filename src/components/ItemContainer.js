@@ -3,14 +3,14 @@ import { connect } from 'react-redux';
 import { removeGroceryItem, saveGroceryItem } from 'actions';
 import Item from 'components/Item';
 
-function mapStateToProps({ groceries }, { item, index }) {
-  return { groceries, item, index };
+function mapStateToProps({ groceries }, { item }) {
+  return { groceries, item };
 }
 
 function mapDispatchToProps(dispatch) {
   return {
-    removeGroceryItem: index => dispatch(removeGroceryItem(index)),
-    saveGroceryItem: (index, item) => dispatch(saveGroceryItem(index, item)),
+    removeGroceryItem: item => dispatch(removeGroceryItem(item)),
+    saveGroceryItem: (id, item) => dispatch(saveGroceryItem(id, item)),
   };
 }
 

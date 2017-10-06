@@ -6,10 +6,10 @@ export function addGroceryItem(item) {
   return { type: ADD_GROCERY_ITEM, item };
 }
 
-export function removeGroceryItem(index) {
-  return { type: REMOVE_GROCERY_ITEM, index };
+export function removeGroceryItem(item) {
+  return { type: REMOVE_GROCERY_ITEM, item };
 }
 
-export function saveGroceryItem(index, item) {
-  return { type: SAVE_GROCERY_ITEM, index, item };
+export function saveGroceryItem(id, item) {
+  return { type: SAVE_GROCERY_ITEM, id, item };
 }

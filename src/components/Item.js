@@ -6,7 +6,6 @@ class Item extends Component {
   static propTypes = {
     groceries: PropTypes.instanceOf(List),
     item: PropTypes.instanceOf(Object),
-    index: PropTypes.instanceOf(Number),
   };
 
   constructor(props) {
@@ -14,35 +13,35 @@ class Item extends Component {
     this.state = { isEditing: false };
   }
 
-  onRemove = item => {
+  onRemove(item) {
     this.props.removeGroceryItem(item);
-  };
+  }
 
   onStartEdit() {
     this.setState({ isEditing: true });
   }
 
-  onSave(index, event) {
+  onSave(event, { id }) {
     if (event.key === 'Enter') {
       const name = event.target.value;
-      this.props.saveGroceryItem(index, { name });
+      this.props.saveGroceryItem(id, { name });
       this.setState({ isEditing: false });
     }
   }
 
-  onChecked = (index, event) => {
+  onChecked(event, { id }) {
     const checked = event.target.checked;
-    this.props.saveGroceryItem(index, { checked });
+    this.props.saveGroceryItem(id, { checked });
     this.forceUpdate();
-  };
+  }
 
-  _renderItemName(item, index) {
+  _renderItemName(item) {
     if (this.state.isEditing) {
       return (
         <input
           type="text"
           className="input-item-name"
-          onKeyPress={this.onSave.bind(this, index)}
+          onKeyPress={event => this.onSave(event, item)}
           defaultValue={item.name}
           placeholder="Edit item..."
         />
@@ -51,7 +50,7 @@ class Item extends Component {
       return (
         <span className="fake-input-item-name">
           <em>{item.name}</em>
-          <i className="icon-edit" onClick={this.onStartEdit.bind(this, index)}>
+          <i className="icon-edit" onClick={this.onStartEdit}>
             &#9998;
           </i>
         </span>
@@ -61,15 +60,18 @@ class Item extends Component {
 
   render() {
     const item = this.props.item;
-    const index = this.props.index;
-    const inputName = this._renderItemName(item, index);
+    const inputName = this._renderItemName(item);
     return (
       <li>
-        <input type="checkbox" checked={item.checked} onChange={this.onChecked.bind(this, index)} />
+        <input
+          type="checkbox"
+          checked={item.checked}
+          onChange={event => this.onChecked(event, item)}
+        />
 
         {inputName}
 
-        <i className="icon-remove" onClick={this.onRemove.bind(this, index)}>
+        <i className="icon-remove" onClick={() => this.onRemove(item)}>
           &#10007;
         </i>
       </li>

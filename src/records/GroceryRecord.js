@@ -1,5 +1,5 @@
 import { Record } from 'immutable';
 
-const GroceryRecord = Record({ checked: false, name: 'foobar' });
+const GroceryRecord = Record({ id: 'foo', checked: false, name: 'foobar' });
 
 export default GroceryRecord;
