@@ -18,12 +18,13 @@ class App extends Component {
 
   render() {
     const { groceries } = this.props;
-
     return (
       <div className="app">
         <h1>My groceries :</h1>
         <input type="text" onKeyPress={this.onAdd} placeholder="Add an item..." />
-        <ul>{groceries.map((item, index) => <ItemContainer key={index} item={item} index={index} />)}</ul>
+        <ul>
+          {groceries.map((item, index) => <ItemContainer key={index} item={item} index={index} />)}
+        </ul>
       </div>
     );
   }
